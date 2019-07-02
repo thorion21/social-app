@@ -30,7 +30,7 @@ class Post(models.Model):
     updated_at = models.DateField()
 
     def __str__(self):
-        return 'Post', self.text, 'created on', self.created_at.strftime('%m/%d/%Y, %H:%M:%S')
+        return 'Post ' + self.text + ' created on ' + self.created_at.strftime('%m/%d/%Y, %H:%M:%S')
 
 
 class Comment(models.Model):
@@ -49,7 +49,7 @@ class Comment(models.Model):
     updated_at = models.DateField()
 
     def __str__(self):
-        return 'Comment', self.text, 'created on', self.created_at.strftime('%m/%d/%Y, %H:%M:%S')
+        return 'Comment ' + self.text + ' created on ' + self.created_at.strftime('%m/%d/%Y, %H:%M:%S')
 
 
 class Country(models.Model):
