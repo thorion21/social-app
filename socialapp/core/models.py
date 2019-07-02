@@ -2,9 +2,21 @@ import datetime
 from django.db import models
 from django.contrib.auth import get_user_model
 
+User = get_user_model()
+
 # Create your models here.
 
-User = get_user_model()
+
+class UserProfile(models.Model):
+    birthday = models.DateField()
+    image = models.CharField(null=True, max_length=50)
+    country = models.IntegerField()
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+    )
+    friends = models.ManyToManyField(User, related_name="friends")
+    friend_requests = models.ManyToManyField(User, related_name="friend_requests")
 
 
 class Post(models.Model):
