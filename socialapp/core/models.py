@@ -14,7 +14,6 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        primary_key=True,
     )
     friends = models.ManyToManyField(User, related_name="friends")
     friend_requests = models.ManyToManyField(User, related_name="friend_requests")
