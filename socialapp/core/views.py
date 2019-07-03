@@ -26,8 +26,8 @@ def user_profile_page(request, user_id):
         current_user = User.objects.get(pk=user_id)
     except ObjectDoesNotExist:
         error_string = "User not found"
-        return render(request, 'error_page.html', context={'text': error_string})
+        return render(request, 'error_page.html', {'text': error_string})
 
-    return render(request, 'user_profile.html', context={'user': current_user})
+    return render(request, 'user_profile.html', {'user': current_user})
 
 
