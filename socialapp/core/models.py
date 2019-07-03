@@ -38,7 +38,7 @@ class Post(models.Model):
     created_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='post_creator'
+        related_name='posts'
     )
     created_at = models.DateField(default=datetime.datetime.now)
     updated_at = models.DateField()
@@ -52,12 +52,12 @@ class Comment(models.Model):
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        related_name='post_source'
+        related_name='comments'
     )
     created_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='comment_creator'
+        related_name='comments'
     )
     created_at = models.DateField(default=datetime.datetime.now)
     updated_at = models.DateField()
