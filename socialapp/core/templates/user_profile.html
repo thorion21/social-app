@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <img src="{% static 'images.jpeg' %}" class="profile_image">
+    <h2> User Profile </h2>
+    <p> Username: {{ user.username }}</p>
+    <p> First Name: {{user.first_name}}</p>
+    <p> Last Name: {{user.last_name}}</p>
+    <p> Birthday: {{user.user_profiles.birthday}}</p>
+    <p> Birthday: {{user.user_profiles.country.name}}</p>
+{% endblock %}

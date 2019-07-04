@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Post, Comment
+from .models import Post, Comment, UserProfile
 
 User = get_user_model()
 
@@ -25,8 +25,9 @@ def user_profile_page(request, user_id):
     try:
         current_user = User.objects.get(pk=user_id)
     except ObjectDoesNotExist:
-        return HttpResponse('User not found')
+        error_string = "User not found"
+        return render(request, 'error_page.html', {'text': error_string})
 
-    return HttpResponse(current_user.username)
+    return render(request, 'user_profile.html', {'user': current_user})
 
 
