@@ -1,0 +1,247 @@
+[
+{
+    "model": "core.country",
+    "pk": 1,
+    "fields": {
+        "name": "Canada"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 7,
+    "fields": {
+        "name": "Russia"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 30,
+    "fields": {
+        "name": "Greece"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 31,
+    "fields": {
+        "name": "Netherlands"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 32,
+    "fields": {
+        "name": "Belgium"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 33,
+    "fields": {
+        "name": "France"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 34,
+    "fields": {
+        "name": "Spain"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 36,
+    "fields": {
+        "name": "Hungary"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 39,
+    "fields": {
+        "name": "Italy"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 40,
+    "fields": {
+        "name": "Romania"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 41,
+    "fields": {
+        "name": "Switzerland"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 44,
+    "fields": {
+        "name": "United Kingdom"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 45,
+    "fields": {
+        "name": "Denmark"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 46,
+    "fields": {
+        "name": "Sweden"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 47,
+    "fields": {
+        "name": "Norway"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 54,
+    "fields": {
+        "name": "Argentina"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 61,
+    "fields": {
+        "name": "Australia"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 65,
+    "fields": {
+        "name": "Singapore"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 81,
+    "fields": {
+        "name": "Japan"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 86,
+    "fields": {
+        "name": "China"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 90,
+    "fields": {
+        "name": "Turkey"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 353,
+    "fields": {
+        "name": "Ireland"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 354,
+    "fields": {
+        "name": "Iceland"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 355,
+    "fields": {
+        "name": "Albania"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 356,
+    "fields": {
+        "name": "Malta"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 358,
+    "fields": {
+        "name": "Finland"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 359,
+    "fields": {
+        "name": "Bulgaria"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 371,
+    "fields": {
+        "name": "Latvia"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 372,
+    "fields": {
+        "name": "Estonia"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 373,
+    "fields": {
+        "name": "Moldova"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 375,
+    "fields": {
+        "name": "Belarus"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 380,
+    "fields": {
+        "name": "Ukraine"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 381,
+    "fields": {
+        "name": "Serbia"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 386,
+    "fields": {
+        "name": "Slovenia"
+    }
+},
+{
+    "model": "core.country",
+    "pk": 420,
+    "fields": {
+        "name": "Czech Republic"
+    }
+}
+]

@@ -124,3 +124,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = [
     os.path.join(os.path.join(BASE_DIR, "core"), 'static')
 ]
+
+FIXTURE_DIRS = (
+    os.path.join(os.path.join(BASE_DIR, "core"), 'fixtures')
+)
