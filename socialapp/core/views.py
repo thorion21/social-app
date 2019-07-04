@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Post, Comment
+from .models import Post, Comment, UserProfile
 
 User = get_user_model()
 
