@@ -10,4 +10,3 @@ urlpatterns = [
     path('register/', views.register_page, name='register')
 
 ]
-
