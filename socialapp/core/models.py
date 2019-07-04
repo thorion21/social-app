@@ -1,4 +1,3 @@
-import datetime
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -41,8 +40,8 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         related_name='posts'
     )
-    created_at = models.DateField(default=datetime.datetime.now)
-    updated_at = models.DateField()
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     def __str__(self):
         return 'Post ' + self.text + ' created on ' + self.created_at.strftime('%m/%d/%Y, %H:%M:%S')
@@ -60,8 +59,8 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         related_name='comments'
     )
-    created_at = models.DateField(default=datetime.datetime.now)
-    updated_at = models.DateField()
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     def __str__(self):
         return 'Comment ' + self.text + ' created on ' + self.created_at.strftime('%m/%d/%Y, %H:%M:%S')

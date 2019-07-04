@@ -1,8 +1,55 @@
-    .example {
-        color: #5b80b2;
+    body {
+        background: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Simple-Background-Images-25.png') no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+}
+
+    .header {
+        background-color: #5b80b2 !important;
+        width: 1150px;
+    }
+
+    .container-color {
+        background-color: #FFFFCC !important;
+        max-width: 1000px;
+        height: 1000px;
+    }
+
+    .comment {
+        text-align: center;
+    }
+
+    .comment-author {
+        /*font-size: 12px;*/
+        display: inline-block;
+    }
+
+    .post {
+        text-align: center;
+    }
+
+    .post-author {
+        margin-top: -20px;
+        font-size: 14px;
     }
 
     .profile_image {
         width: 128px;
         height: 160px;
     }
+
+    .bubble {
+        text-align: center;
+        background: #42a5f5;
+        color: #fff !important;
+        border-radius: 20px 20px 3px 20px;
+
+        position: relative;
+        max-width: 300px;
+        padding: 7px 13px 7px 13px;
+        margin-left: auto !important;
+        margin-right: auto !important;
+	}
+

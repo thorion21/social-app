@@ -1,11 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <h1 class="font-weight-light" style="text-align: center; margin-bottom: 50px;">All posts</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8"><input type="text" name="text" class="form-control" required="" id="id_text" maxlength="200" placeholder="Write your post here..."></div>
+            <div class="col-sm-2"><input type="submit" class="btn btn-primary comment" value="Post"></div>
+        </div>
+
+    </form>
+
     {% for post in posts %}
-        <h2>{{ post.text }}</h2>
+        <p class="h2 post">{{ post.text }}</p>
 
         {% for comment in post.comments.all %}
-            <p>{{ comment.text }}</p>
+            <div class="p-2 m-0 comment">{{ comment.created_by }}: {{ comment.text }}</div>
         {% endfor %}
+
     {% endfor %}
 {% endblock %}

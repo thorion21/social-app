@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Post, Comment, UserProfile
+from .forms import PostForm
 
 User = get_user_model()
 
@@ -15,10 +16,26 @@ def index(request):
 
 
 def posts_page(request):
-    posts = Post.objects.all()
 
-    return render(request, 'posts.html',
-                  {'posts': posts})
+    if request.method == 'GET':
+        posts = Post.objects.all()
+        form = PostForm()
+
+        return render(request, 'posts.html',
+                      {'posts': posts, 'form': form})
+
+    form = PostForm(request.POST)
+
+    if form.is_valid():
+        text = form.cleaned_data['text']
+        s = Post(text=text, created_by=request.user)
+        s.save()
+
+        form = PostForm()
+        posts = Post.objects.all()
+
+        return render(request, 'posts.html',
+                      {'posts': posts, 'form': form})
 
 
 def user_profile_page(request, user_id):
@@ -29,5 +46,7 @@ def user_profile_page(request, user_id):
         return render(request, 'error_page.html', {'text': error_string})
 
     return render(request, 'user_profile.html', {'user': current_user})
+
+
 
 
