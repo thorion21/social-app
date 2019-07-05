@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Post, Comment, UserProfile
 from .forms import PostForm, UserForm, CommentForm
+from django.contrib import messages
 
 User = get_user_model()
 
@@ -42,7 +43,12 @@ def post_detail_page(request, post_id):
 
     if request.method == 'GET':
         return render(request, 'post_details.html',
-                      {'post': current_post, 'form': CommentForm()})
+                      {
+                          'post': current_post,
+                          'form': CommentForm(),
+                          'edit_form': PostForm(),
+                          'request_user': request.user
+                      })
 
     form = CommentForm(request.POST)
 
@@ -51,8 +57,19 @@ def post_detail_page(request, post_id):
         new_comment = Comment(text=text, created_by=request.user, post=current_post)
         new_comment.save()
 
-        return render(request, 'post_details.html',
-                      {'post': current_post, 'form': CommentForm()})
+        return redirect('post_detail_page_view', post_id=post_id)
+
+
+def edit_post(request, post_id):
+    post_to_update = Post.objects.get(pk=post_id)
+    form = PostForm(request.POST)
+
+    if form.is_valid():
+        text = form.cleaned_data['text']
+        post_to_update.text = text
+        post_to_update.save()
+
+    return redirect('post_detail_page_view', post_id=post_id)
 
 
 def user_profile_page(request, user_id):

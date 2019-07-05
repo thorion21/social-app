@@ -74,6 +74,16 @@
         background: rgba(100, 100, 100, 0.1);
     }
 
+    .edit {
+        word-wrap: break-word;
+        word-break: break-all;
+        text-align: center;
+        width: 300px;
+        height: 200% !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .bubble {
         text-align: center;
         background: #42a5f5;
