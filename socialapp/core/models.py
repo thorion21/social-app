@@ -67,5 +67,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return 'Comment ' + self.text + ' created on ' + self.created_at.strftime('%m/%d/%Y, %H:%M:%S')
-
-

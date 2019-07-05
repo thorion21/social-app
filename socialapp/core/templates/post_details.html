@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="post">
+        <p class="h2">"{{ post.text }}"</p>
+        <p class="post-author">by {{ post.created_by }} on {{ post.created_at }}</p>
+    </div>
+
+    {% for comment in post.comments.all %}
+        <div class="comment">
+            <div style="color: white;">{{ comment.text }}</div>
+            <div class="comment-author">{{ comment.created_by }}, {{ comment.created_at }}</div>
+        </div>
+    {% endfor %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4"><input type="text" name="text" class="form-control" required="" id="id_text" maxlength="200" placeholder="Write your comment here..."></div>
+            <div class="col-sm-2"><input type="submit" class="btn btn-primary comment" value="Submit"></div>
+        </div>
+    </form>
+
+{% endblock %}

@@ -15,11 +15,9 @@
     </form>
 
     {% for post in posts %}
-        <p class="h2 post">{{ post.text }}</p>
-
-        {% for comment in post.comments.all %}
-            <div class="p-2 m-0 comment">{{ comment.created_by }}: {{ comment.text }}</div>
-        {% endfor %}
-
+        <div class="post-bubble">
+            <a href="{{ post.id }}" class="h2 post">{{ post.text | truncatechars:64 | linebreaks}}</a>
+            <p class="post-author-2">by {{ post.created_by }} on {{ post.created_at }}</p>
+        </div>
     {% endfor %}
 {% endblock %}
