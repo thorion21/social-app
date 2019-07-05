@@ -59,21 +59,17 @@ def register_page(request):
     form = UserForm(request.POST)
 
     if form.is_valid():
-        print('ERR')
-        data = form.cleaned_data
+        data = form.cleaned_data\
+
         username = data['username']
         email = data['email']
-
         password = data['password']
-        first_name = data['first_name']
-        last_name = data['last_name']
 
-        new_user = User.objects.create_user(username=username, password=password)
-        new_user.first_name = first_name
-        new_user.last_name = last_name
-        new_user.email = email
-
-        new_user.save()
+        extra_args = {
+            'first_name': data['first_name'],
+            'last_name': data['last_name']
+        }
+        new_user = User.objects.create_user(username=username, email=email, password=password, **extra_args)
 
         new_user_profile = UserProfile(user=new_user)
         new_user_profile.save()

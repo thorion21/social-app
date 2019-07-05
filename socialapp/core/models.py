@@ -28,9 +28,9 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
         related_name='user_profiles',
     )
-    friends = models.ManyToManyField(User, related_name="friends", blank=True, null=True)
+    friends = models.ManyToManyField(User, related_name="friends", blank=True)
     friend_requests = models.ManyToManyField(User, related_name="friend_requests",
-                                             blank=True, null=True)
+                                             blank=True)
 
     def __str__(self):
         return 'User ' + self.user.username + ' from ' + self.country.name

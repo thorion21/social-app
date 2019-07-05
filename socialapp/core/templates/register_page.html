@@ -5,7 +5,7 @@
     <form method="POST">
         {% csrf_token %}
         <p>Username: <input type="text" name="username" maxlength="150" required="" id="id_username"> <span class="small_text">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span></p>
-        <p><label for="id_password">Password:</label> <input type="text" name="password" maxlength="128" required="" id="id_password"></p>
+        <p><label for="id_password">Password:</label> <input type="password" name="password" maxlength="128" required="" id="id_password"></p>
         <p><label for="id_first_name">First name:</label> <input type="text" name="first_name" maxlength="30" id="id_first_name"></p>
         <p><label for="id_last_name">Last name:</label> <input type="text" name="last_name" maxlength="150" id="id_last_name"></p>
         <p><label for="id_email">Email address:</label> <input type="email" name="email" maxlength="254" id="id_email"></p>
