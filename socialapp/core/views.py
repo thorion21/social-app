@@ -76,7 +76,7 @@ def register_page(request):
     form = UserForm(request.POST)
 
     if form.is_valid():
-        data = form.cleaned_data\
+        data = form.cleaned_data
 
         username = data['username']
         email = data['email']
