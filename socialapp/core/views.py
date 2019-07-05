@@ -52,7 +52,7 @@ def post_detail_page(request, post_id):
         new_comment.save()
 
         return render(request, 'post_details.html',
-{'post': current_post, 'form': CommentForm()})
+                      {'post': current_post, 'form': CommentForm()})
 
 
 def user_profile_page(request, user_id):
@@ -96,6 +96,3 @@ def register_page(request):
 
     return render(request, 'error_page.html',
                   {'text': "Error occurred during registration"})
-
-
-
