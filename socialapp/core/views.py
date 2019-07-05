@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Post, Comment, UserProfile
 from .forms import PostForm, UserForm, CommentForm
+from django.views import View
 from django.contrib import messages
 
 User = get_user_model()
