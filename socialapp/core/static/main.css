@@ -18,26 +18,60 @@
     }
 
     .comment {
-        text-align: center;
+        background: #0B93F6;
+        display: table;
+        margin-left: auto;
+        margin-right: 5%;
+        max-width: 250px;
+        border-radius: 3px;
+        padding: 2px 7px 2px 7px;
+        margin-bottom: 5px;
+        text-align: right;
     }
 
     .comment-author {
-        /*font-size: 12px;*/
-        display: inline-block;
+        font-size: 12px;
+        text-align: right;
+        color: #E0E0E0;
     }
 
     .post {
         text-align: center;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 8px;
     }
 
     .post-author {
+        text-align: right;
+        margin-top: -15px;
+        font-size: 14px;
+        color: #808080;
+    }
+
+    .post-author-2 {
         margin-top: -20px;
         font-size: 14px;
+        color: #808080;
     }
 
     .profile_image {
         width: 128px;
         height: 160px;
+    }
+
+    .post-bubble {
+        text-align: center;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        transition: background-color 0.3s ease;
+    }
+
+    .post-bubble:hover {
+        border-radius: 4px;
+        background: rgba(100, 100, 100, 0.1);
     }
 
     .bubble {

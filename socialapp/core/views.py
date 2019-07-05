@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Post, Comment, UserProfile
-from .forms import PostForm, UserForm
+from .forms import PostForm, UserForm, CommentForm
 
 User = get_user_model()
 
@@ -16,26 +16,43 @@ def index(request):
 
 
 def posts_page(request):
-
+    posts = Post.objects.all()
     if request.method == 'GET':
-        posts = Post.objects.all()
-        form = PostForm()
-
         return render(request, 'posts.html',
-                      {'posts': posts, 'form': form})
+                      {'posts': posts, 'form': PostForm()})
 
     form = PostForm(request.POST)
 
     if form.is_valid():
         text = form.cleaned_data['text']
-        s = Post(text=text, created_by=request.user)
-        s.save()
-
-        form = PostForm()
-        posts = Post.objects.all()
+        new_post = Post(text=text, created_by=request.user)
+        new_post.save()
 
         return render(request, 'posts.html',
-                      {'posts': posts, 'form': form})
+                      {'posts': posts, 'form': PostForm()})
+
+
+def post_detail_page(request, post_id):
+
+    try:
+        current_post = Post.objects.get(pk=post_id)
+    except ObjectDoesNotExist:
+        error_string = "Post not found"
+        return render(request, 'error_page.html', {'text': error_string})
+
+    if request.method == 'GET':
+        return render(request, 'post_details.html',
+                      {'post': current_post, 'form': CommentForm()})
+
+    form = CommentForm(request.POST)
+
+    if form.is_valid():
+        text = form.cleaned_data['text']
+        new_comment = Comment(text=text, created_by=request.user, post=current_post)
+        new_comment.save()
+
+        return render(request, 'post_details.html',
+                      {'post': current_post, 'form': CommentForm()})
 
 
 def user_profile_page(request, user_id):
@@ -79,6 +96,3 @@ def register_page(request):
 
     return render(request, 'error_page.html',
                   {'text': "Error occurred during registration"})
-
-
-
