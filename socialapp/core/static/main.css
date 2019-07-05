@@ -53,3 +53,8 @@
         margin-right: auto !important;
 	}
 
+    .small_text {
+        font-size: 12px;
+        padding-left: 30px
+    }
+

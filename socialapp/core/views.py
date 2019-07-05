@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Post, Comment, UserProfile
-from .forms import PostForm
+from .forms import PostForm, UserForm
 
 User = get_user_model()
 
@@ -47,6 +47,38 @@ def user_profile_page(request, user_id):
 
     return render(request, 'user_profile.html', {'user': current_user})
 
+
+def register_page(request):
+
+    if request.method == 'GET':
+        form = UserForm()
+
+        return render(request, 'register_page.html',
+                      {'form': form})
+
+    form = UserForm(request.POST)
+
+    if form.is_valid():
+        data = form.cleaned_data\
+
+        username = data['username']
+        email = data['email']
+        password = data['password']
+
+        extra_args = {
+            'first_name': data['first_name'],
+            'last_name': data['last_name']
+        }
+        new_user = User.objects.create_user(username=username, email=email, password=password, **extra_args)
+
+        new_user_profile = UserProfile(user=new_user)
+        new_user_profile.save()
+
+        return render(request, 'user_profile.html',
+                      {'user': new_user})
+
+    return render(request, 'error_page.html',
+                  {'text': "Error occurred during registration"})
 
 
 
