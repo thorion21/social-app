@@ -2,11 +2,15 @@
 {% load static %}
 
 {% block content %}
-    <img src="{% static 'images.jpeg' %}" class="profile_image">
+    <img src="{% static 'images.jpeg' %}" class="profile_image" id ="image">
     <h2> User Profile </h2>
-    <p> Username: {{ user.username }}</p>
-    <p> First Name: {{user.first_name}}</p>
-    <p> Last Name: {{user.last_name}}</p>
-    <p> Birthday: {{user.user_profiles.birthday}}</p>
-    <p> Country: {{user.user_profiles.country.name}}</p>
+    <p id="username">Username: {{ user.username }}</p>
+    <p id="first_name">First Name: {{ user.first_name }}</p>
+    <p id= "last_name">Last Name: {{ user.last_name }}</p>
+    <p id= "email">Email: {{ user.email }}</p>
+    <p id="birthday">Birthday: {{ user.user_profiles.birthday }}</p>
+    <p id="country">Country: {{ user.user_profiles.country.name }}</p>
+    <form action="/core/profile/{{ user.id }}/edit"
+    <p><button style="background-color:#609ab6; color:beige" class="btn btn-outline-info" type="edit">Edit</button></p>
+    </form>
 {% endblock %}

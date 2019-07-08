@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Post, Comment, UserProfile
-from .forms import PostForm, UserForm, CommentForm
+from .models import Post, Comment, UserProfile, Country
+from .forms import PostForm, UserForm, CommentForm, EditProfileForm
+from django.views import View
 from django.contrib import messages
 
 User = get_user_model()
@@ -116,3 +117,47 @@ def register_page(request):
 
     return render(request, 'error_page.html',
                   {'text': "Error occurred during registration"})
+
+
+class EditProfileView(View):
+
+    def get(self, request, user_id):
+        try:
+            current_user = User.objects.get(pk=user_id)
+        except ObjectDoesNotExist:
+            error_string = "User not found"
+            return render(request, 'error_page.html', {'text': error_string})
+
+        form = EditProfileForm()
+        birthday = current_user.user_profiles.birthday.strftime("%Y-%m-%d")
+
+        return render(request, 'edit_user_profile.html',
+                          {'user': current_user, 'form': form, 'birthday': birthday})
+
+    def post(self, request, user_id):
+        try:
+            current_user = User.objects.get(pk=user_id)
+        except ObjectDoesNotExist:
+            error_string = "User not found"
+            return render(request, 'error_page.html', {'text': error_string})
+
+        form = EditProfileForm(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+            user_update_args = {
+                'first_name': data['first_name'],
+                'last_name': data['last_name'],
+                'email': data['email'],
+            }
+            user_profile_update_args = {
+                'image': data['image'],
+                'birthday': data['birthday'],
+                'country': Country.objects.filter(name=data['country']).values_list('code', flat=True)[0],
+            }
+            User.objects.filter(pk=current_user.id).update(**user_update_args)
+            current_profile = UserProfile.objects.filter(user=current_user)
+            current_profile.update(**user_profile_update_args)
+
+            return render(request, 'user_profile.html',
+                              {'user': current_user, 'form': form})
