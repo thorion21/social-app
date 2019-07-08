@@ -1,9 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="post">
-        <p class="h2">"{{ post.text }}"</p>
-        <p class="post-author">by {{ post.created_by }} on {{ post.created_at }}</p>
+
+    {% if request_user == post.created_by %}
+        <input type="submit" class="btn btn-primary comment" onclick="edit()" value="EDIT" id="edit" style="display: table">
+    {% endif %}
+
+    <form method="post" id="edit-form" style="display: none" action="{{ post.id }}/edit">
+        {% csrf_token %}
+
+        <div class="row" >
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4"><input type="text" name="text" class="form-control edit" id="id_text" maxlength="{{ edit_form.text.field.widget.attrs.maxlength }}" value="{{ post.text }}"></div>
+        </div>
+
+        <input type="submit" class="btn btn-primary comment" onclick="save()" value="SAVE" id="save" style="display: table;">
+    </form>
+
+    <div class="post" id="post-header">
+        <div id="post-details">
+            <p class="h2">"{{ post.text }}"</p>
+            <p class="post-author">by {{ post.created_by }} on {{ post.created_at }}</p>
+        </div>
     </div>
 
     {% for comment in post.comments.all %}
@@ -17,9 +35,25 @@
         {% csrf_token %}
         <div class="row">
             <div class="col-sm-4"></div>
-            <div class="col-sm-4"><input type="text" name="text" class="form-control" required="" id="id_text" maxlength="200" placeholder="Write your comment here..."></div>
+            <div class="col-sm-4"><input type="text" name="text" class="form-control" required="" id="id_text" maxlength="{{ form.text.field.widget.attrs.maxlength }}" placeholder="Write your comment here..."></div>
             <div class="col-sm-2"><input type="submit" class="btn btn-primary comment" value="Submit"></div>
         </div>
     </form>
+
+    <script>
+    function edit() {
+        document.getElementById("post-details").style.display = "none";
+        document.getElementById("save").style.display = "table";
+        document.getElementById("edit").style.display = "none";
+        document.getElementById("edit-form").style.display = "block";
+    }
+
+    function save() {
+        document.getElementById("post-details").style.display = "block";
+        document.getElementById("save").style.display = "none";
+        document.getElementById("edit").style.display = "table";
+        document.getElementById("edit-form").style.display = "none";
+    }
+    </script>
 
 {% endblock %}
