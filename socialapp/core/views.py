@@ -42,13 +42,16 @@ def post_detail_page(request, post_id):
         return render(request, 'error_page.html', {'text': error_string})
 
     if request.method == 'GET':
-        return render(request, 'post_details.html',
-                      {
-                          'post': current_post,
-                          'form': CommentForm(),
-                          'edit_form': PostForm(),
-                          'request_user': request.user
-                      })
+        return render(
+            request,
+            'post_details.html',
+            {
+                'post': current_post,
+                'form': CommentForm(),
+                'edit_form': PostForm(),
+                'request_user': request.user
+            }
+        )
 
     form = CommentForm(request.POST)
 
