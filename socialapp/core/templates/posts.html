@@ -14,7 +14,7 @@
 
     </form>
 
-    {% for post in posts %}
+    {% for post in object_list %}
         <div class="post-bubble">
             <a href="{{ post.id }}" class="h2 post">{{ post.text | truncatechars:64 | linebreaks}}</a>
             <p class="post-author-2">by {{ post.created_by }} on {{ post.created_at }}</p>
