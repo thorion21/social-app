@@ -130,3 +130,4 @@ FIXTURE_DIRS = (
 )
 
 LOGIN_REDIRECT_URL = '/core/posts'
+LOGIN_URL = '/core/login'

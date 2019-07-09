@@ -5,6 +5,7 @@ from django.urls import path
 from .views import EditProfileView, PostsPage, PostDetailPage, EditPost
 from .views import UserProfilePage, RegisterPage
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('', views.index, name='index'),

@@ -34,7 +34,7 @@ class PostsPage(ListView, FormView):
         return super().form_valid(form)
 
 
-class PostDetailPage(LoginRequiredMixin, DetailView):
+class PostDetailPage(DetailView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     template_name = "post_details.html"
@@ -63,7 +63,7 @@ class PostDetailPage(LoginRequiredMixin, DetailView):
         return redirect('post_detail_page_view', pk=pk)
 
 
-class EditPost(View):
+class EditPost(LoginRequiredMixin, View):
 
     def post(self, request, post_id):
         post_to_update = Post.objects.get(pk=post_id)
