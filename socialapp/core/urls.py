@@ -4,6 +4,7 @@ from . import views
 from django.urls import path
 from .views import EditProfileView, PostsPage, PostDetailPage, EditPost
 from .views import UserProfilePage, RegisterPage
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -13,4 +14,5 @@ urlpatterns = [
     path('posts/<int:post_id>/edit', EditPost.as_view(), name='edit_post'),
     path('register/', RegisterPage.as_view(), name='register'),
     path('profile/<int:user_id>/edit/', EditProfileView.as_view(), name='edit_profile'),
+    path('login/', auth_views.LoginView.as_view(template_name="login.html"), name='login_page')
 ]

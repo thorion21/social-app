@@ -128,3 +128,5 @@ STATICFILES_DIRS = [
 FIXTURE_DIRS = (
     os.path.join(os.path.join(BASE_DIR, "core"), 'fixtures')
 )
+
+LOGIN_REDIRECT_URL = '/core/posts'

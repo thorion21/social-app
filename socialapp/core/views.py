@@ -8,6 +8,9 @@ from django.views import View
 from django.views.generic import ListView
 from django.views.generic.edit import FormView
 from django.views.generic.detail import DetailView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 User = get_user_model()
 
@@ -31,9 +34,11 @@ class PostsPage(ListView, FormView):
         return super().form_valid(form)
 
 
-class PostDetailPage(DetailView):
-    model = Post
+class PostDetailPage(LoginRequiredMixin, DetailView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     template_name = "post_details.html"
+
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -143,3 +148,7 @@ class EditProfileView(View):
             current_profile.update(**user_profile_update_args)
 
             return redirect('user_profile_page_view', pk=user_id)
+
+
+class Login(View):
+    pass
