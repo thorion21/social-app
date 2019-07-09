@@ -2,16 +2,16 @@
 
 {% block content %}
 
-    {% if request_user == post.created_by %}
+    {% if  user == object.created_by %}
         <input type="submit" class="btn btn-primary comment" onclick="edit()" value="EDIT" id="edit" style="display: table">
     {% endif %}
 
-    <form method="post" id="edit-form" style="display: none" action="{{ post.id }}/edit">
+    <form method="post" id="edit-form" style="display: none" action="{{ object.id }}/edit">
         {% csrf_token %}
 
         <div class="row" >
             <div class="col-sm-4"></div>
-            <div class="col-sm-4"><input type="text" name="text" class="form-control edit" id="id_text" maxlength="{{ edit_form.text.field.widget.attrs.maxlength }}" value="{{ post.text }}"></div>
+            <div class="col-sm-4"><input type="text" name="text" class="form-control edit" id="id_text1" maxlength="{{ edit_form.text.field.widget.attrs.maxlength }}" value="{{ object.text }}"></div>
         </div>
 
         <input type="submit" class="btn btn-primary comment" onclick="save()" value="SAVE" id="save" style="display: table;">
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    {% for comment in post.comments.all %}
+    {% for comment in object.comments.all %}
         <div class="comment">
             <div style="color: white;">{{ comment.text }}</div>
             <div class="comment-author">{{ comment.created_by }}, {{ comment.created_at }}</div>

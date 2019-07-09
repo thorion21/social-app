@@ -7,32 +7,15 @@ from .forms import PostForm, UserForm, CommentForm, EditProfileForm
 from django.views import View
 from django.views.generic import ListView
 from django.views.generic.edit import FormView
+from django.views.generic.detail import DetailView
 
 User = get_user_model()
-
 
 # Create your views here.
 
 
 def index(request):
     return HttpResponse('I think it works...')
-#
-#
-# def posts_page(request):
-#     posts = Post.objects.all()
-#     if request.method == 'GET':
-#         return render(request, 'posts.html',
-#                       {'posts': posts, 'form': PostForm()})
-#
-#     form = PostForm(request.POST)
-#
-#     if form.is_valid():
-#         text = form.cleaned_data['text']
-#         new_post = Post(text=text, created_by=request.user)
-#         new_post.save()
-#
-#         return render(request, 'posts.html',
-#                       {'posts': posts, 'form': PostForm()})
 
 
 class PostsPage(ListView, FormView):
@@ -48,88 +31,75 @@ class PostsPage(ListView, FormView):
         return super().form_valid(form)
 
 
-def post_detail_page(request, post_id):
+class PostDetailPage(DetailView):
+    model = Post
+    template_name = "post_details.html"
 
-    try:
-        current_post = Post.objects.get(pk=post_id)
-    except ObjectDoesNotExist:
-        error_string = "Post not found"
-        return render(request, 'error_page.html', {'text': error_string})
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(PostDetailPage, self).get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        context['edit_form'] = PostForm()
+        return context
 
-    if request.method == 'GET':
-        return render(
-            request,
-            'post_details.html',
-            {
-                'post': current_post,
-                'form': CommentForm(),
-                'edit_form': PostForm(),
-                'request_user': request.user
+    def post(self, request, pk):
+        try:
+            current_post = Post.objects.get(pk=pk)
+        except ObjectDoesNotExist:
+            error_string = "Post not found"
+            return render(request, 'error_page.html', {'text': error_string})
+
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            text = form.cleaned_data['text']
+            new_comment = Comment(text=text, created_by=request.user, post=current_post)
+            new_comment.save()
+
+        return redirect('post_detail_page_view', pk=pk)
+
+
+class EditPost(View):
+
+    def post(self, request, post_id):
+        post_to_update = Post.objects.get(pk=post_id)
+        form = PostForm(request.POST)
+
+        if form.is_valid():
+            text = form.cleaned_data['text']
+            post_to_update.text = text
+            post_to_update.save()
+            return redirect('post_detail_page_view', pk=post_id)
+
+
+class UserProfilePage(DetailView):
+    model = User
+    template_name = "user_profile.html"
+
+
+class RegisterPage(FormView):
+    form_class = UserForm
+    template_name = "register_page.html"
+
+    def post(self, request):
+        form = UserForm(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+            username = data['username']
+            email = data['email']
+            password = data['password']
+            extra_args = {
+                'first_name': data['first_name'],
+                'last_name': data['last_name']
             }
-        )
 
-    form = CommentForm(request.POST)
+            new_user = User.objects.create_user(username=username, email=email, password=password, **extra_args)
+            new_user_profile = UserProfile(user=new_user)
+            new_user_profile.save()
 
-    if form.is_valid():
-        text = form.cleaned_data['text']
-        new_comment = Comment(text=text, created_by=request.user, post=current_post)
-        new_comment.save()
+            return redirect('user_profile_page_view', pk=new_user.id)
 
-        return redirect('post_detail_page_view', post_id=post_id)
-
-
-def edit_post(request, post_id):
-    post_to_update = Post.objects.get(pk=post_id)
-    form = PostForm(request.POST)
-
-    if form.is_valid():
-        text = form.cleaned_data['text']
-        post_to_update.text = text
-        post_to_update.save()
-
-    return redirect('post_detail_page_view', post_id=post_id)
-
-#ListView
-def user_profile_page(request, user_id):
-    try:
-        current_user = User.objects.get(pk=user_id)
-    except ObjectDoesNotExist:
-        error_string = "User not found"
-        return render(request, 'error_page.html', {'text': error_string})
-
-    return render(request, 'user_profile.html', {'user': current_user})
-
-#CreateView
-def register_page(request):
-
-    if request.method == 'GET':
-        form = UserForm()
-
-        return render(request, 'register_page.html',
-                      {'form': form})
-
-    form = UserForm(request.POST)
-
-    if form.is_valid():
-        data = form.cleaned_data
-
-        username = data['username']
-        email = data['email']
-        password = data['password']
-
-        extra_args = {
-            'first_name': data['first_name'],
-            'last_name': data['last_name']
-        }
-        new_user = User.objects.create_user(username=username, email=email, password=password, **extra_args)
-
-        new_user_profile = UserProfile(user=new_user)
-        new_user_profile.save()
-
-        return render(request, 'user_profile.html',
-                      {'user': new_user})
-
-    return render(request, 'error_page.html',
+        return render(request, 'error_page.html',
                   {'text': "Error occurred during registration"})
 
 
@@ -143,18 +113,17 @@ class EditProfileView(View):
             return render(request, 'error_page.html', {'text': error_string})
 
         form = EditProfileForm()
-        birthday = current_user.user_profiles.birthday.strftime("%Y-%m-%d")
+
+        if current_user.user_profiles.birthday:
+            birthday = current_user.user_profiles.birthday.strftime("%Y-%m-%d")
+        else:
+            birthday = None
 
         return render(request, 'edit_user_profile.html',
                           {'user': current_user, 'form': form, 'birthday': birthday})
 
     def post(self, request, user_id):
-        try:
-            current_user = User.objects.get(pk=user_id)
-        except ObjectDoesNotExist:
-            error_string = "User not found"
-            return render(request, 'error_page.html', {'text': error_string})
-
+        current_user = User.objects.get(pk=user_id)
         form = EditProfileForm(request.POST)
 
         if form.is_valid():
@@ -173,5 +142,4 @@ class EditProfileView(View):
             current_profile = UserProfile.objects.filter(user=current_user)
             current_profile.update(**user_profile_update_args)
 
-            return render(request, 'user_profile.html',
-                              {'user': current_user, 'form': form})
+            return redirect('user_profile_page_view', pk=user_id)
