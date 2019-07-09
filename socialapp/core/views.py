@@ -5,7 +5,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Post, Comment, UserProfile, Country
 from .forms import PostForm, UserForm, CommentForm, EditProfileForm
 from django.views import View
-from django.contrib import messages
+from django.views.generic import ListView
+from django.views.generic.edit import FormView
 
 User = get_user_model()
 
@@ -15,23 +16,36 @@ User = get_user_model()
 
 def index(request):
     return HttpResponse('I think it works...')
+#
+#
+# def posts_page(request):
+#     posts = Post.objects.all()
+#     if request.method == 'GET':
+#         return render(request, 'posts.html',
+#                       {'posts': posts, 'form': PostForm()})
+#
+#     form = PostForm(request.POST)
+#
+#     if form.is_valid():
+#         text = form.cleaned_data['text']
+#         new_post = Post(text=text, created_by=request.user)
+#         new_post.save()
+#
+#         return render(request, 'posts.html',
+#                       {'posts': posts, 'form': PostForm()})
 
 
-def posts_page(request):
-    posts = Post.objects.all()
-    if request.method == 'GET':
-        return render(request, 'posts.html',
-                      {'posts': posts, 'form': PostForm()})
+class PostsPage(ListView, FormView):
+    model = Post
+    template_name = "posts.html"
+    form_class = PostForm
+    success_url = './'
 
-    form = PostForm(request.POST)
-
-    if form.is_valid():
+    def form_valid(self, form):
         text = form.cleaned_data['text']
-        new_post = Post(text=text, created_by=request.user)
+        new_post = Post(text=text, created_by=self.request.user)
         new_post.save()
-
-        return render(request, 'posts.html',
-                      {'posts': posts, 'form': PostForm()})
+        return super().form_valid(form)
 
 
 def post_detail_page(request, post_id):
@@ -75,7 +89,7 @@ def edit_post(request, post_id):
 
     return redirect('post_detail_page_view', post_id=post_id)
 
-
+#ListView
 def user_profile_page(request, user_id):
     try:
         current_user = User.objects.get(pk=user_id)
@@ -85,7 +99,7 @@ def user_profile_page(request, user_id):
 
     return render(request, 'user_profile.html', {'user': current_user})
 
-
+#CreateView
 def register_page(request):
 
     if request.method == 'GET':
